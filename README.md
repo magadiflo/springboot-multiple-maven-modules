@@ -68,3 +68,19 @@
      <module>domain</module>
   </modules>
   ````
+# Creando el segundo módulo de persistencia
+- Seguimos los mismos pasos que el primer módulo creado, incluso la misma configuración.
+
+# Configurando el segundo módulo de persistencia
+- Adicionalmente, a las configuraciones realizadas como en el primer módulo, necesitamos realizar una particular para
+  este segundo módulo. Recordar que como será un módulo de persistencia, requerimos usar las clases de dominio, 
+  por lo tanto, necesitamos agregar las dependencias del módulo domain en el pom.xml de este nuevo módulo **persistence**:
+  ````
+  <dependencies>
+      <dependency>
+          <groupId>com.magadiflo.my-company-project</groupId>
+          <artifactId>domain</artifactId>
+          <version>1.0-SNAPSHOT</version>
+      </dependency>
+  </dependencies>
+  ````
