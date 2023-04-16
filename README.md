@@ -39,3 +39,32 @@
 - Dentro del properties hay otras propiedades que nuestro proyecto padre las creó por defecto al generar
   nuestro proyecto java maven: **maven.compiler.source, maven.compiler.target y project.build.sourceEncoding**, 
   dichas propiedades las eliminaremos, ya que el **spring-boot-starter-parent** ya las tiene definidas.
+
+# Creando el primer módulo de dominio
+- Clic en el proyecto padre (springboot-multiple-maven-modules)/New/Module...
+- Realizamos solo las siguientes configuraciones:
+  ````
+  Name: domain
+  Parent: springboot-multiple-maven-module <---- corresponde a nuestro proyecto padre
+  ````
+- Le damos en create.
+
+## Configurando primer módulo creado
+- Abrimos el pom.xml generado y vemos que en **parent** agregó los datos del proyecto padre,
+  esto está bien, ya que de esa forma estamos referenciando quién es el padre de este módulo.
+- Vemos también que solo agregó el **artifactId domain**, esto está bien, 
+  ya que el **groupId, la version** al ser los mismos que el de su proyecto padre las usará
+  y no las colocará para no redundar.
+- Crea las properties con **maven.compiler.source, maven.compiler.target, project.build.sourceEncoding**,
+  como recordaremos, esas propiedades ya las tenemos configuradas en el proyecto padre, para ser
+  más exactos el **spring-boot-starter-parent** es quien los tiene configuradas, por lo tanto
+  nosotros las **eliminaremos** para no volver a redundarlas.
+- Recordar que por defecto, de forma implícita, nuestro **packaging** generado es jar y es lo que necesitamos
+  para este módulo, lo podemos colocar de forma explícita entre las etiquetas **packaging,** pero no es necesario.
+- Finalmente, en el pom.xml del proyecto padre se genera unas etiquetas donde se registran los módulos
+  que vamos creando:
+  ````
+  <modules>
+     <module>domain</module>
+  </modules>
+  ````
