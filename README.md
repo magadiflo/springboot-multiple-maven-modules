@@ -96,3 +96,43 @@
 - Configuramos tal como lo hicimos en el primer módulo.
 - Agregamos las dependencias, tanto del módulo de persitence como la del domain, ya que este módulo web usará ambas.
   Esto es similar a cómo agregamos la dependencia de domain en persistence.
+
+# Solución al error #1
+
+````
+Description:
+Parameter 0 of constructor in com.magadiflo.web.app.HotelController required a bean of type 'com.magadiflo.persistence.app.IHotelRepository' that could not be found.
+````
+
+Como estamos trabajando con múltiples módulos, debemos indicarle a Spring dónde debe escanear los beans de persistencia,
+agregando la siguiente anotación en la clase principal de nuestro proyecto de Sring Boot (DemoApplication):
+
+````
+@EnableJpaRepositories(basePackages = { "com.magadiflo.persistence.app" })
+````
+
+Con esa anotación le decimos que busque en el paquete "com.magadiflo.persistence.app" del módulo de persistencia
+nuestro bean IHotelRepository, esto porque como estamos trabajando en múltiples módulos, cuando Spring hace el escaneo
+para buscar el bean de IHotelRepository, no lo encontrará en los paquetes de este módulo web, así que debemos ser
+explícitos e indicarle dónde buscarlos.
+
+# Solución al error #2
+````
+Not a managed type: class com.magadiflo.domain.app.Hotel
+````
+Este error es similar al error #1, debemos indicarle en la clase principal de Spring Boot que escanee las entidades
+que usamos en los módulos en el package donde están dichas entidades, para eso usamos la siguiente anotación:
+````
+@EntityScan(basePackages = {"com.magadiflo.domain.app"})
+````
+
+# Solución al error #3
+Recordar que en la clase DbSeeder del módulo de persistence, agregamos la interfaz CommandLineRunner para agregar
+datos por defecto al iniciar nuestra aplicación de Spring Boot, pero cuando ejecutamos no se está poblando.
+Recordar además que a dicha clase le agregamos la anotación @Component, entonces la solución es similar a los dos anteriores,
+debemos decirle a Spring Boot que escanee los componentes que tengan la anotación @Component en el package que le definamos:
+````
+@ComponentScan(basePackages = {"com.magadiflo.persistence.app", "com.magadiflo.domain.app", "com.magadiflo.web.app"})
+````
+Si observamos, los @Components pueden estar dispersos en todos nuestros módulos, así que le agregamos los packetes de los
+otros módulos, por si en el futuro les agregamos componentes.
