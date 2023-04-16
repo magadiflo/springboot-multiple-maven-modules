@@ -19,6 +19,7 @@
     <modules>
         <module>domain</module>
         <module>persistence</module>
+        <module>web</module>
     </modules>
 
     <properties>

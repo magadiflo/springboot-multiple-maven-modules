@@ -33,14 +33,15 @@
     ````
      <packaging>pom</packaging>
     ````
-- Agregamos en el properties del pom.xml padre, la propiedad java.version a la versión 17. 
+- Agregamos en el properties del pom.xml padre, la propiedad java.version a la versión 17.
   Esta propiedad **(java.version)** es definida en el properties del spring-boot-starter-parent con la versión 1.8,
   nosotros la sobreescribiremos con nuestra propia versión de java 17.
 - Dentro del properties hay otras propiedades que nuestro proyecto padre las creó por defecto al generar
-  nuestro proyecto java maven: **maven.compiler.source, maven.compiler.target y project.build.sourceEncoding**, 
+  nuestro proyecto java maven: **maven.compiler.source, maven.compiler.target y project.build.sourceEncoding**,
   dichas propiedades las eliminaremos, ya que el **spring-boot-starter-parent** ya las tiene definidas.
 
 # Creando el primer módulo de dominio
+
 - Clic en el proyecto padre (springboot-multiple-maven-modules)/New/Module...
 - Realizamos solo las siguientes configuraciones:
   ````
@@ -50,9 +51,10 @@
 - Le damos en create.
 
 ## Configurando primer módulo creado
+
 - Abrimos el pom.xml generado y vemos que en **parent** agregó los datos del proyecto padre,
   esto está bien, ya que de esa forma estamos referenciando quién es el padre de este módulo.
-- Vemos también que solo agregó el **artifactId domain**, esto está bien, 
+- Vemos también que solo agregó el **artifactId domain**, esto está bien,
   ya que el **groupId, la version** al ser los mismos que el de su proyecto padre las usará
   y no las colocará para no redundar.
 - Crea las properties con **maven.compiler.source, maven.compiler.target, project.build.sourceEncoding**,
@@ -68,13 +70,17 @@
      <module>domain</module>
   </modules>
   ````
+
 # Creando el segundo módulo de persistencia
+
 - Seguimos los mismos pasos que el primer módulo creado, incluso la misma configuración.
 
 # Configurando el segundo módulo de persistencia
+
 - Adicionalmente, a las configuraciones realizadas como en el primer módulo, necesitamos realizar una particular para
-  este segundo módulo. Recordar que como será un módulo de persistencia, requerimos usar las clases de dominio, 
-  por lo tanto, necesitamos agregar las dependencias del módulo domain en el pom.xml de este nuevo módulo **persistence**:
+  este segundo módulo. Recordar que como será un módulo de persistencia, requerimos usar las clases de dominio,
+  por lo tanto, necesitamos agregar las dependencias del módulo domain en el pom.xml de este nuevo módulo **persistence
+  **:
   ````
   <dependencies>
       <dependency>
@@ -84,3 +90,9 @@
       </dependency>
   </dependencies>
   ````
+
+# Creando el tercer módulo web
+
+- Configuramos tal como lo hicimos en el primer módulo.
+- Agregamos las dependencias, tanto del módulo de persitence como la del domain, ya que este módulo web usará ambas.
+  Esto es similar a cómo agregamos la dependencia de domain en persistence.
