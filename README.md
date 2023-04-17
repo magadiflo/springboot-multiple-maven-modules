@@ -154,3 +154,56 @@ pocas palabras quedaría de esta manera:
 ````
 De esta manera, Spring Boot va a escanear en todos los
 módulos cuyos paquetes inicien con **com.magadiflo**
+
+# Solución error #4
+Cuando tratamos de compilar mediante maven:
+````
+mvn clean package
+````
+Nos muestra el error
+> Unable to find main class
+
+Para solucionar el error, debemos pasar la siguiente dependencia y plugin del 
+pom.xml del padre al pom.xml del módulo web:
+````
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+</build>
+````
+Esto es porque nuestro módulo web, es quien realmente contiene la aplicación
+web, el controlador, etc. por eso movemos la dependencia de spring-boot-starter-web,
+y también es el punto de entrada de nuestra aplicación por eso movemos el spring-boot-maven-plugin
+para que se construya el proyecto correctamente.
+
+Lo que dice la documentación de Spring Boot Maven Plugin: 
+````
+El complemento Spring Boot Maven proporciona compatibilidad con Spring Boot en Apache Maven. 
+Le permite empaquetar archivos jar o war ejecutables, ejecutar aplicaciones Spring Boot, 
+generar información de compilación e iniciar su aplicación Spring Boot antes de ejecutar 
+las pruebas de integración.
+````
+
+# Compilando proyecto con maven
+Abrimos la terminal posicionándonos en la raíz del proyecto: springboot-multiple-maven-modules y ejecutamos:
+````
+mvn clean package
+````
+Una vez finalizada la construcción de los paquetes, ejecutamos mediante la consola el .jar de nuestro 
+módulo web
+````
+java -jar web\target\web-1.0-SNAPSHOT.jar
+````
+Accedemos por url, y vemos que nos devuelve los tres registros almacenados en la BD
+````
+http://localhost:8080/api/v0/hotels
+````
