@@ -14,9 +14,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = {"com.magadiflo.persistence.app"})
-@EntityScan(basePackages = {"com.magadiflo.domain.app"})
-@ComponentScan(basePackages = {"com.magadiflo.persistence.app", "com.magadiflo.domain.app", "com.magadiflo.web.app"})
+@EnableJpaRepositories(basePackages = {"com.magadiflo"})
+@EntityScan(basePackages = {"com.magadiflo"})
+@ComponentScan(basePackages = {"com.magadiflo"})
 public class DemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);

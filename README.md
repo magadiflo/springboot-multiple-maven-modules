@@ -136,3 +136,21 @@ debemos decirle a Spring Boot que escanee los componentes que tengan la anotaci�
 ````
 Si observamos, los @Components pueden estar dispersos en todos nuestros módulos, así que le agregamos los packetes de los
 otros módulos, por si en el futuro les agregamos componentes.
+
+# Mejorar el escaneo de paquetes para los repositorios, entidades y componentes de los módulos
+Como vimos en la solución de los errores #1, #2 y #3, necesitábamos agregar los paquetes donde están los 
+elementos correspondientes para que Spring Boot los escanee. Eso funciona bien ya que escribimos la ruta de los
+paquetes para indicarle a Spring Boot que allí debe buscarlos. Sin embargo, ocurre un pequeño problema, qué
+pasaría si tuviéramos un proyecto muy grande, dichas anotaciones se llenarían de rutas apuntando a los paquetes
+donde estén los elementos requeridos. Para evitar estar escribiendo muchas rutas, es necesario que desde el 
+principio empecemos agregando un prefijo para que todos los paquetes tengan un inicio en común, como en mi caso
+todos los módulos sus paquetes inician con: **com.magadiflo**, de esa manera le diríamos a Spring Boot que
+escanee todo lo que se encuentre en dichos paquetes, así evitamos estar colocando paquete por paquete. En 
+pocas palabras quedaría de esta manera:
+````
+@EnableJpaRepositories(basePackages = {"com.magadiflo"})
+@EntityScan(basePackages = {"com.magadiflo"})
+@ComponentScan(basePackages = {"com.magadiflo"})
+````
+De esta manera, Spring Boot va a escanear en todos los
+módulos cuyos paquetes inicien con **com.magadiflo**
